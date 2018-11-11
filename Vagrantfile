@@ -3,7 +3,12 @@
 
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
+  config.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--audio", "none"]
+  end
+
   glusterfs_version = "4.0"
+
   # We setup three nodes to be gluster hosts, and one gluster client to mount the volume
   (1..3).each do |i|
     config.vm.define vm_name = "gluster-server-#{i}" do |config|
